@@ -67,65 +67,68 @@ class _HomeState extends State<Home>{
         ),
         elevation: 0.0,
       ),
-      body: SingleChildScrollView(
-        child: Column(
-          children: <Widget>[
-            Container(
-              decoration: BoxDecoration(
-                color: const Color(0xfff5f8fd),
-                borderRadius: BorderRadius.circular(30)
-              ),
-              margin: const EdgeInsets.symmetric(horizontal: 24),
-              padding: const EdgeInsets.symmetric(horizontal: 24),
-              child: Row(
-                children: [
-                  const Expanded(
-                      child: TextField(
-                        decoration: InputDecoration(
-                            hintText: "Search wallpaper",
-                          border: InputBorder.none
-                        ),
-                        //controller: search,
-                      )
-                  ),
-                  GestureDetector(
-                    onTap: (){
-                      Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                              builder: (context) => Search(searchQuery: '',)
-                          )
-                      );
-                    },
-                    child: Container(
-                        child: Icon(Icons.search)
+      body: SafeArea(
+        child: wallpapers.isEmpty
+            ? Center(child: CircularProgressIndicator(),)
+            : SingleChildScrollView(
+          child: Column(
+            children: <Widget>[
+              Container(
+                decoration: BoxDecoration(
+                    color: const Color(0xfff5f8fd),
+                    borderRadius: BorderRadius.circular(30)
+                ),
+                margin: const EdgeInsets.symmetric(horizontal: 24),
+                padding: const EdgeInsets.symmetric(horizontal: 24),
+                child: Row(
+                  children: [
+                    Expanded(
+                        child: TextField(
+                          controller: search,
+                          decoration: const InputDecoration(
+                              hintText: "Search wallpaper",
+                              border: InputBorder.none
+                          ),
+                          //controller: search,
+                        )
                     ),
-                  )
-                ],
+                    GestureDetector(
+                      onTap: (){
+                        Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => Search(searchQuery: search.text,)
+                            )
+                        );
+                      },
+                      child: const Icon(Icons.search),
+                    )
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 16,),
-            Container(
-              height: 80,
-              child: ListView.builder(
-                itemCount: categories.length,
-                //shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                itemBuilder: (context, index) {
-                  return CategoriesTile(
-                      title: categories[index].categorieName,
-                      imgUrl: categories[index].imgUrl
-                  );
-                },
+              const SizedBox(height: 16,),
+              Container(
+                height: 80,
+                child: ListView.builder(
+                  itemCount: categories.length,
+                  //shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  itemBuilder: (context, index) {
+                    return CategoriesTile(
+                        title: categories[index].categorieName,
+                        imgUrl: categories[index].imgUrl
+                    );
+                  },
+                ),
               ),
-            ),
-            wallpappersList(wallpapers: wallpapers, context: context),
-            Container(
-              color: Colors.red, height: 40,
-              child: Text("Pour plus d'info, contactez le 96 13 35 25", style: TextStyle(color: Colors.white,fontSize: 19),),
-              //margin: EdgeInsets.symmetric(horizontal: 50),
-            )
-          ],
+              wallpappersList(wallpapers: wallpapers, context: context),
+              Container(
+                color: Colors.red, height: 40,
+                child: Text("Pour plus d'info, contactez le 96 13 35 25", style: const TextStyle(color: Colors.white,fontSize: 19),),
+                //margin: EdgeInsets.symmetric(horizontal: 50),
+              )
+            ],
+          ),
         ),
       ),
     );

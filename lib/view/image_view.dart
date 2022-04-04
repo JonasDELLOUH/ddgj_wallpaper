@@ -33,6 +33,7 @@ class _ImageViewState extends State<ImageView> {
             ),
           ),
           Container(
+            margin: EdgeInsets.only(top: 620),
             height: MediaQuery.of(context).size.height,
             width: MediaQuery.of(context).size.width,
             alignment: Alignment.bottomCenter,

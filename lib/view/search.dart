@@ -51,7 +51,6 @@ class _SearchState extends State<Search> {
   void initState() {
     getSearchWallpapers(widget.searchQuery);
     super.initState();
-    searchController!.text = widget.searchQuery;
   }
 
   @override
@@ -74,8 +73,9 @@ class _SearchState extends State<Search> {
                 padding: const EdgeInsets.symmetric(horizontal: 24),
                 child: Row(
                   children: [
-                    const Expanded(
+                    Expanded(
                         child: TextField(
+                          controller: searchController,
                           decoration: InputDecoration(
                               hintText: "Search wallpaper",
                               border: InputBorder.none
@@ -84,7 +84,9 @@ class _SearchState extends State<Search> {
                     ),
                     GestureDetector(
                       onTap: (){
-                        getSearchWallpapers(searchController!.text);
+                        setState(() {
+                          getSearchWallpapers(searchController!.text);
+                        });
                       },
                       child: Container(
                           child: const Icon(Icons.search)
